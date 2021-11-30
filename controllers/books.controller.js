@@ -26,7 +26,13 @@ const addNewBook = (req, res) => {
         return res.status(200).send(data);
     });
 }
+const getAllBooksUser = async (req, res) => {
+    const { id } = req.params
+    const data = await booksModel.Book.find({user:id})
+    return res.status(200).json(data)
+}
 module.exports = {
     getAllBooks,
-    addNewBook
+    addNewBook,
+    getAllBooksUser
 }

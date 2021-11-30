@@ -9,6 +9,8 @@ router.get('/getAllBooks', (req, res) => {
 .post('/newBook', (req, res) => {
     booksController.addNewBook(req, res);
 })
-
+router.get('/getAllBooksUser/:id', (req, res) => {
+    booksController.getAllBooksUser(req, res);
+})
 
 module.exports = router;
