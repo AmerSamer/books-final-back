@@ -18,5 +18,7 @@ router.delete('/deleteBookByUser/:id', (req, res) => {
 router.put('/updateBookByUser/:id', (req, res) => {
     booksController.updateBookByUser(req, res);
 })
-
+router.put('/updateCommentBook/:id', (req, res) => {
+    booksController.updateCommentBook(req, res);
+})
 module.exports = router;

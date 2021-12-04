@@ -1,5 +1,6 @@
 const booksModel = require('../models/books.model');
 const cartsModel = require('../models/carts.model');
+const favoritesModel = require('../models/favorites.model');
 
 const getAllBooks = async (req, res) => {
     const data = await booksModel.Book.find({})
@@ -39,6 +40,7 @@ const deleteBookByUser = async (req, res) => {
         return res.status(400).json({ error: "Book Not Valid." });
     }
     await cartsModel.Cart.deleteMany({ book: idExists._id })
+    await favoritesModel.Favorites.deleteMany({ book: idExists._id })
     booksModel.Book.findByIdAndDelete(id, (err, data) => {
         if (err) return res.status(404).send(err);
         return res.status(200).send(data);
@@ -61,11 +63,27 @@ const updateBookByUser = async (req, res) => {
         return res.status(200).send(data);
     });
 }
-
+const updateCommentBook = async (req, res) => {
+    const { id } = req.params;
+    const { comments } = req.body;
+    const idExists = await booksModel.Book.findById(id);
+    if (idExists) {
+        const commentsArray = idExists.comments;
+        commentsArray.push(comments)
+        booksModel.Book.findByIdAndUpdate({ _id: id }, { comments: commentsArray }, { new: true, runValidators: true }, (err, data) => {
+            if (err) return res.status(404).send(err);
+            return res.status(200).send(data);
+        });
+        // return res.status(400).json({ error: "Book Not Valid." });
+    } else {
+        return res.status(400).json({ error: "Book Not Valid." });
+    }
+}
 module.exports = {
     getAllBooks,
     addNewBook,
     getAllBooksUser,
     deleteBookByUser,
-    updateBookByUser
+    updateBookByUser,
+    updateCommentBook
 }
