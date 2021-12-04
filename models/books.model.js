@@ -48,6 +48,7 @@ const booksSchema = new mongoose.Schema({
     },
     rating: {
         type: Number,
+        default: 4,
         required: false,
         validate: {
             validator: (r) => {

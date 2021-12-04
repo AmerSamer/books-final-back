@@ -18,7 +18,7 @@ const addNewBook = (req, res) => {
         desc: desc,
         price: price,
         user: user,
-        rating: 0,
+        rating: 4,
         comments: [],
         purchase: 0,
         bookUploadDate: new Date()
@@ -79,11 +79,28 @@ const updateCommentBook = async (req, res) => {
         return res.status(400).json({ error: "Book Not Valid." });
     }
 }
+const updateRatingBook = async (req, res) => {
+    const { id } = req.params;
+    const { rating } = req.body;
+    const idExists = await booksModel.Book.findById(id);
+    if (idExists) {
+        const ratingsCalc = (idExists.rating * idExists.purchase + rating) / (idExists.purchase + 1);
+        // ratingsArray.push(rating)
+        booksModel.Book.findByIdAndUpdate({ _id: id }, { rating: ratingsCalc }, { new: true, runValidators: true }, (err, data) => {
+            if (err) return res.status(404).send(err);
+            return res.status(200).send(data);
+        });
+        // return res.status(400).json({ error: "Book Not Valid." });
+    } else {
+        return res.status(400).json({ error: "Book Not Valid." });
+    }
+}
 module.exports = {
     getAllBooks,
     addNewBook,
     getAllBooksUser,
     deleteBookByUser,
     updateBookByUser,
-    updateCommentBook
+    updateCommentBook,
+    updateRatingBook
 }

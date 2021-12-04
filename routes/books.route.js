@@ -21,4 +21,7 @@ router.put('/updateBookByUser/:id', (req, res) => {
 router.put('/updateCommentBook/:id', (req, res) => {
     booksController.updateCommentBook(req, res);
 })
+router.put('/updateRatingBook/:id', (req, res) => {
+    booksController.updateRatingBook(req, res);
+})
 module.exports = router;
