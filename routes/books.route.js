@@ -12,5 +12,11 @@ router.get('/getAllBooks', (req, res) => {
 router.get('/getAllBooksUser/:id', (req, res) => {
     booksController.getAllBooksUser(req, res);
 })
+router.delete('/deleteBookByUser/:id', (req, res) => {
+    booksController.deleteBookByUser(req, res);
+})
+router.put('/updateBookByUser/:id', (req, res) => {
+    booksController.updateBookByUser(req, res);
+})
 
 module.exports = router;

@@ -13,6 +13,7 @@ app.use(cors());
 
 app.use('/books/store', require('./routes/users.route'));
 app.use('/books/store', require('./routes/books.route'));
+app.use('/books/store', require('./routes/carts.route'));
 
 mongoose.connect('mongodb://localhost/dbBooksStore', { useNewUrlParser: true, useUnifiedTopology: true }, () => {
     console.log('Connected to DB');
