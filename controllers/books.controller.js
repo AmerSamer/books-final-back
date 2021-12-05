@@ -85,12 +85,10 @@ const updateRatingBook = async (req, res) => {
     const idExists = await booksModel.Book.findById(id);
     if (idExists) {
         const ratingsCalc = (idExists.rating * idExists.purchase + rating) / (idExists.purchase + 1);
-        // ratingsArray.push(rating)
         booksModel.Book.findByIdAndUpdate({ _id: id }, { rating: ratingsCalc }, { new: true, runValidators: true }, (err, data) => {
             if (err) return res.status(404).send(err);
             return res.status(200).send(data);
         });
-        // return res.status(400).json({ error: "Book Not Valid." });
     } else {
         return res.status(400).json({ error: "Book Not Valid." });
     }
