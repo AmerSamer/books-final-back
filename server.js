@@ -16,7 +16,7 @@ app.use('/books/store', require('./routes/books.route'));
 app.use('/books/store', require('./routes/carts.route'));
 app.use('/books/store', require('./routes/favorites.route'));
 
-mongoose.connect('mongodb://localhost/dbBooksStore', { useNewUrlParser: true, useUnifiedTopology: true }, () => {
+mongoose.connect(`${process.env.DB_URL}`, { useNewUrlParser: true, useUnifiedTopology: true }, () => {
     console.log('Connected to DB');
 });
 app.listen(process.env.PORT || 4001, () => console.log(`Listening on port ${process.env.PORT || 4001}`));
