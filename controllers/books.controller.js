@@ -7,8 +7,11 @@ const getAllBooks = async (req, res) => {
     return res.status(200).json(data)
 }
 const addNewBook = (req, res) => {
+    console.log(req.file);
+    const { filename } = req.file;
     const { name, author, publishing, amount, language, category, desc, price, user } = req.body; ///// not finished
     const newBook = new booksModel.Book({
+        img: filename,
         name: name,
         author: author,
         publishing: publishing,
@@ -93,6 +96,34 @@ const updateRatingBook = async (req, res) => {
         return res.status(400).json({ error: "Book Not Valid." });
     }
 }
+const uploadImageBook = async (req, res) => {
+    if (req.files === null) {
+        return res.status(400).json({ msg: 'No file uploaded' });
+      }
+    
+      const file = req.files.file;
+    
+      file.mv(`${__dirname}/client/public/uploads/${file.name}`, err => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send(err);
+        }
+    
+        res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+      });
+    // const { id } = req.params;
+    // const { img } = req.body;
+    // const idExists = await booksModel.Book.findById(id);
+    // if (idExists) {
+    //     const newImage = img;
+    //     booksModel.Book.findByIdAndUpdate({ _id: id }, { img: newImage }, { new: true, runValidators: true }, (err, data) => {
+    //         if (err) return res.status(404).send(err);
+    //         return res.status(200).send(data);
+    //     });
+    // } else {
+    //     return res.status(400).json({ error: "Book Not Valid." });
+    // }
+}
 module.exports = {
     getAllBooks,
     addNewBook,
@@ -100,5 +131,6 @@ module.exports = {
     deleteBookByUser,
     updateBookByUser,
     updateCommentBook,
-    updateRatingBook
+    updateRatingBook,
+    uploadImageBook
 }
