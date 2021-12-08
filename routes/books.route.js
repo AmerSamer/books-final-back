@@ -22,8 +22,32 @@ const upload = multer({
 router.get('/getAllBooks', (req, res) => {
     booksController.getAllBooks(req, res);
 })
-.post('/newBook', upload.single('image'), (req, res) => {
-    booksController.addNewBook(req, res);
+// .post('/newBook', (req, res) => {
+//     booksController.addNewBook(req, res);
+// })
+router.post('/newBook', upload.single('image'), (req, res) => {
+    const { filename } = req.file;
+    const { name, author, publishing, amount, language, category, desc, price, user } = req.body; ///// not finished
+    const newBook = new booksModel.Book({
+        img: filename,
+        name: name,
+        author: author,
+        publishing: publishing,
+        amount: amount,
+        language: language,
+        category: category,
+        desc: desc,
+        price: price,
+        user: user,
+        rating: 4,
+        comments: [],
+        purchase: 0,
+        bookUploadDate: new Date()
+    })
+    newBook.save((err, data) => {
+        if (err) return res.status(404).send(err);
+        return res.status(200).send(data);
+    });
 })
 router.get('/getAllBooksUser/:id', (req, res) => {
     booksController.getAllBooksUser(req, res);

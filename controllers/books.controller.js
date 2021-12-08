@@ -6,31 +6,31 @@ const getAllBooks = async (req, res) => {
     const data = await booksModel.Book.find({})
     return res.status(200).json(data)
 }
-const addNewBook = (req, res) => {
-    console.log(req.file);
-    const { filename } = req.file;
-    const { name, author, publishing, amount, language, category, desc, price, user } = req.body; ///// not finished
-    const newBook = new booksModel.Book({
-        img: filename,
-        name: name,
-        author: author,
-        publishing: publishing,
-        amount: amount,
-        language: language,
-        category: category,
-        desc: desc,
-        price: price,
-        user: user,
-        rating: 4,
-        comments: [],
-        purchase: 0,
-        bookUploadDate: new Date()
-    })
-    newBook.save((err, data) => {
-        if (err) return res.status(404).send(err);
-        return res.status(200).send(data);
-    });
-}
+// const addNewBook = (req, res) => {
+//     console.log(req.body.name);
+//     const { filename } = req.file;
+//     const { name, author, publishing, amount, language, category, desc, price, user } = req.body; ///// not finished
+//     const newBook = new booksModel.Book({
+//         img: filename,
+//         name: name,
+//         author: author,
+//         publishing: publishing,
+//         amount: amount,
+//         language: language,
+//         category: category,
+//         desc: desc,
+//         price: price,
+//         user: user,
+//         rating: 4,
+//         comments: [],
+//         purchase: 0,
+//         bookUploadDate: new Date()
+//     })
+//     newBook.save((err, data) => {
+//         if (err) return res.status(404).send(err);
+//         return res.status(200).send(data);
+//     });
+// }
 const getAllBooksUser = async (req, res) => {
     const { id } = req.params
     const data = await booksModel.Book.find({ user: id })
@@ -126,7 +126,7 @@ const uploadImageBook = async (req, res) => {
 }
 module.exports = {
     getAllBooks,
-    addNewBook,
+    // addNewBook,
     getAllBooksUser,
     deleteBookByUser,
     updateBookByUser,
