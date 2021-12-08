@@ -41,13 +41,13 @@ const updateActivation = async (req, res) => {
         return res.status(400).json({ error: "Email Not Valid." });
     }
     //////////////////////
-    const idActive = await usersModel.User.findOne({ active: true });
-    if (idActive) {
-        usersModel.User.findOneAndUpdate({ active: { $eq: true } }, { active: false }, { new: true, runValidators: true }, (err, data) => {
-                if (err) return res.status(404).send(err);
-                // res.status(200).send(data);
-            });
-    }
+    // const idActive = await usersModel.User.findOne({ active: true });
+    // if (idActive) {
+    //     usersModel.User.findOneAndUpdate({ active: { $eq: true } }, { active: false }, { new: true, runValidators: true }, (err, data) => {
+    //             if (err) return res.status(404).send(err);
+    //             // res.status(200).send(data);
+    //         });
+    // }
     /////////////////////
     if (idExists) {
         usersModel.User.findByIdAndUpdate( id , { active: true }, { new: true, runValidators: true }, (err, data) => {
