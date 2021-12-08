@@ -25,7 +25,7 @@ router.get('/getAllBooks', (req, res) => {
 // .post('/newBook', (req, res) => {
 //     booksController.addNewBook(req, res);
 // })
-router.post('/newBook', upload.single('image'), (req, res) => {
+router.post('/newBook', upload.single('img'), (req, res) => {
     const { filename } = req.file;
     const { name, author, publishing, amount, language, category, desc, price, user } = req.body; ///// not finished
     const newBook = new booksModel.Book({
