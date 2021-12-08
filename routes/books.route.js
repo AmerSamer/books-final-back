@@ -25,7 +25,7 @@ router.get('/getAllBooks', (req, res) => {
 // .post('/newBook', (req, res) => {
 //     booksController.addNewBook(req, res);
 // })
-router.post('/newBook', upload.single('img'), (req, res) => {
+router.post('/newBook', upload.single('img'), async (req, res) => {
     const { filename } = req.file;
     const { name, author, publishing, amount, language, category, desc, price, user } = req.body; ///// not finished
     const newBook = new booksModel.Book({
@@ -44,10 +44,11 @@ router.post('/newBook', upload.single('img'), (req, res) => {
         purchase: 0,
         bookUploadDate: new Date()
     })
-    newBook.save((err, data) => {
-        if (err) return res.status(404).send(err);
-        return res.status(200).send(data);
-    });
+    newBook = await newBook.save()
+    // newBook.save((err, data) => {
+    //     if (err) return res.status(404).send(err);
+    //     return res.status(200).send(data);
+    // });
 })
 router.get('/getAllBooksUser/:id', (req, res) => {
     booksController.getAllBooksUser(req, res);
