@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const booksSchema = new mongoose.Schema({
     img:{
         type: String,
+        default: "",
         required: false
     },
     name: {
