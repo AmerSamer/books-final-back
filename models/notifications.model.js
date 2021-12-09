@@ -23,6 +23,7 @@ const notificationsSchema = new mongoose.Schema({
     },
     reply: {
         type: String,
+        default: "",
         required: false,
     },
     isDone: {
