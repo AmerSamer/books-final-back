@@ -9,5 +9,7 @@ router.post('/newNotifications/', (req, res) => {
 router.get('/notifications/:id', (req, res) => {
     notificationsController.getAllNotifications(req, res);
 })
-
+router.get('/notificationsReceived/:id', (req, res) => {
+    notificationsController.getAllNotificationsReceived(req, res);
+})
 module.exports = router;
