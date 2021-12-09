@@ -2,7 +2,7 @@ const notificationsModel = require('../models/notifications.model');
 
 const getAllNotifications = async (req, res) => {
     const { id } = req.params
-    notificationsModel.Notifications.find({ usersender: id }).populate('bookId').exec((err, data) => {
+    notificationsModel.Notifications.find({ usersender: id }).populate('bookId').populate('usersender').exec((err, data) => {
         if (err) console.log(err);
         return res.send(data)
     })
