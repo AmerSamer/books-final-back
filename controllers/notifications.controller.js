@@ -49,9 +49,9 @@ const notificationsReply = async (req, res) => {
     const { reply } = req.body;
     const idExists = await notificationsModel.Notifications.findById(id);
     if (idExists) {
-        // const commentsArray = idExists.comments;
-        // commentsArray.push(comments)
-        notificationsModel.Notifications.findByIdAndUpdate({ _id: id }, { reply: reply }, { new: true, runValidators: true }, (err, data) => {
+        const commentsArray = idExists.reply;
+        commentsArray.push(reply)
+        notificationsModel.Notifications.findByIdAndUpdate({ _id: id }, { reply: commentsArray }, { new: true, runValidators: true }, (err, data) => {
             if (err) return res.status(404).send(err);
             return res.status(200).send(data);
         });
