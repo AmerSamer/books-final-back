@@ -31,6 +31,11 @@ const notificationsSchema = new mongoose.Schema({
         default: false,
         required: false,
     },
+    timePublished: {
+        type: Date,
+        default: new Date(),
+        required: false,
+    },
 });
 const Notifications = mongoose.model('notifications', notificationsSchema);
 
