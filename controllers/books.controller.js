@@ -74,7 +74,6 @@ const updateCommentBook = async (req, res) => {
             if (err) return res.status(404).send(err);
             return res.status(200).send(data);
         });
-        // return res.status(400).json({ error: "Book Not Valid." });
     } else {
         return res.status(400).json({ error: "Book Not Valid." });
     }

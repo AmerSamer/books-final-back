@@ -44,8 +44,24 @@ const newNotificationSend = (req, res) => {
         return res.status(200).send(data);
     });
 }
+const notificationsReply = async (req, res) => {
+    const { id } = req.params;
+    const { reply } = req.body;
+    const idExists = await notificationsModel.Notifications.findById(id);
+    if (idExists) {
+        // const commentsArray = idExists.comments;
+        // commentsArray.push(comments)
+        booksModel.Book.findByIdAndUpdate({ _id: id }, { reply: reply }, { new: true, runValidators: true }, (err, data) => {
+            if (err) return res.status(404).send(err);
+            return res.status(200).send(data);
+        });
+    } else {
+        return res.status(400).json({ error: "Notification Not Valid." });
+    }
+}
 module.exports = {
     newNotificationSend,
     getAllNotifications,
-    getAllNotificationsReceived
+    getAllNotificationsReceived,
+    notificationsReply
 }

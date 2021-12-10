@@ -12,4 +12,7 @@ router.get('/notifications/:id', (req, res) => {
 router.get('/notificationsReceived/:id', (req, res) => {
     notificationsController.getAllNotificationsReceived(req, res);
 })
+router.put('/notificationsReply/:id', (req, res) => {
+    notificationsController.notificationsReply(req, res);
+})
 module.exports = router;
