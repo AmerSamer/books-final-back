@@ -1,6 +1,7 @@
 const booksModel = require('../models/books.model');
 const cartsModel = require('../models/carts.model');
 const favoritesModel = require('../models/favorites.model');
+const notificationsModel = require('../models/notifications.model');
 
 const getAllBooks = async (req, res) => {
     const data = await booksModel.Book.find({})
@@ -41,6 +42,7 @@ const deleteBookByUser = async (req, res) => {
     }
     await cartsModel.Cart.deleteMany({ book: idExists._id })
     await favoritesModel.Favorites.deleteMany({ book: idExists._id })
+    await notificationsModel.Notifications.deleteMany({ bookId: idExists._id })
     booksModel.Book.findByIdAndDelete(id, (err, data) => {
         if (err) return res.status(404).send(err);
         return res.status(200).send(data);
