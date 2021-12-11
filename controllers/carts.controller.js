@@ -59,18 +59,19 @@ const deleteUserCart = async (req, res) => {
 
     // });
 }
-const updateBuyCart = (req, res) => {
+const updateBuyCart = async (req, res) => {
     const { id } = req.params;
     cartsModel.Cart.find({ user: id }, (err, data) => {
         cartsModel.Cart.find({ cart: true }, (err, data) => {
             data.map((d) => {
-                booksModel.Book.find({ _id: d.book }, (err, data) => {
-                    const ddd = data.purchase + 1
+                const idExists = await booksModel.Book.findById(d.book);
+                // booksModel.Book.findById({ _id: d.book }, (err, data) => {
+                    const ddd = idExists.purchase + 1
                     booksModel.Book.findByIdAndUpdate({ _id: d.book }, { purchase: ddd }, { new: true, runValidators: true }, (err, data) => {
                         if (err) return res.status(404).send(err);
                         return res.status(200).send(data);
                     });
-                });
+                // });
             })
         });
     });
