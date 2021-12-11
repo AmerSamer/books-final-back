@@ -94,7 +94,7 @@ const updateRatingBook = async (req, res) => {
         return res.status(400).json({ error: "Book Not Valid." });
     }
 }
-const uploadImageBook = async (req, res) => {
+const uploadImageBook = (req, res) => {
      res.send()
 }
 module.exports = {
