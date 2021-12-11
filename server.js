@@ -5,7 +5,14 @@ const cors = require('cors');
 const app = express();
 require('dotenv').config()
 const mongoose = require('mongoose');
-// const multer = require('multer');
+const multer = require('multer');
+const upload = multer({
+    dest: 'images'
+})
+app.post('/upload', upload.single('upload'), (req, res)=>{
+    res.send()
+})
+
 // const itemsModel = require('./models/Items.model').itemsModel;
 // require('./models/authors.model');
 // app.use(bodyParser.json());;
