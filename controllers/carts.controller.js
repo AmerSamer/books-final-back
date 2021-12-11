@@ -58,8 +58,38 @@ const deleteUserCart = async (req, res) => {
 
     // });
 }
+const updateBuyCart = async (req, res) => {
+    // const { id } = req.params;
+    const data = await cartsModel.Cart.find({cart:true})
+    console.log("data",data);
+    // data.map((d)=>{
+    //     const purchaseTemp = d.book.purchase+1
+    //     booksModel.Book.findByIdAndUpdate({ _id: d.book._id }, { purchase: purchaseTemp }, { new: true, runValidators: true }, (err, data) => {
+    //         if (err) return res.status(404).send(err);
+    //         return res.status(200).send(data);
+    //     });
+    // })
+//////////////////////////////////////////////////
+// const { id } = req.params;
+    // const { name, author, publishing, amount, language, category, desc, price } = req.body;
+    // const idExists = await booksModel.Book.findById(id);
+    // if (!idExists) {
+    //     return res.status(400).json({ error: "Book Not Valid." });
+    // }
+
+    // booksModel.Book.findByIdAndUpdate({ _id: id }, {
+    //     name: (name ? name : idExists.name), author: (author ? author : idExists.author), publishing: (publishing ? publishing : idExists.publishing),
+    //     amount: (amount ? amount : idExists.amount), language: (language ? language : idExists.language), category: (category ? category : idExists.category),
+    //     desc: (desc ? desc : idExists.desc), price: (price ? price : idExists.price)
+    // }, { new: true, runValidators: true }, (err, data) => {
+    //     if (err) return res.status(404).send(err);
+    //     return res.status(200).send(data);
+    // });
+//////////////////////////////////////////////////
+}
 module.exports = {
     getAllcartsByUser,
     addNewCart,
-    deleteUserCart
+    deleteUserCart,
+    updateBuyCart
 }

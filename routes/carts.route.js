@@ -12,5 +12,7 @@ router.get('/getAllcartsByUser/:id', (req, res) => {
 router.delete('/deleteBookCart/:id', (req, res) => {
     cartsController.deleteUserCart(req, res);
 })
-
+router.put('/updateBuyCart/', (req, res) => {
+    cartsController.updateBuyCart(req, res);
+})
 module.exports = router;
