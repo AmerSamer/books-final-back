@@ -2,7 +2,7 @@ const express = require('express');
 const booksController = require('../controllers/books.controller')
 // const booksModel = require('../models/books.model');
 const router = express.Router();
-// const multer = require('multer');
+const multer = require('multer');
 
 // const storage = multer.diskStorage({
 //     destination: function(request, file, callback){
@@ -12,12 +12,10 @@ const router = express.Router();
 //         callback(null, Date.now() + file.originalname);
 //     },
 // });
-// const upload = multer({
-//     storage:storage,
-//     limits:{
-//         fieldSize:1024*1024*3
-//     }
-// });
+const upload = multer({
+    dest:'avatars',
+    
+});
 
 router.get('/getAllBooks', (req, res) => {
     booksController.getAllBooks(req, res);
@@ -40,7 +38,7 @@ router.put('/updateCommentBook/:id', (req, res) => {
 router.put('/updateRatingBook/:id', (req, res) => {
     booksController.updateRatingBook(req, res);
 })
-// router.post('/uploadImageBook/', (req, res) => {
-//     booksController.uploadImageBook(req, res);
-// })
+router.post('/users/me/avatar', upload.single('avatar') ,(req, res) => {
+    booksController.uploadImageBook(req, res);
+})
 module.exports = router;

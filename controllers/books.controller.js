@@ -94,7 +94,9 @@ const updateRatingBook = async (req, res) => {
         return res.status(400).json({ error: "Book Not Valid." });
     }
 }
-
+const uploadImageBook = async (req, res) => {
+     res.send()
+}
 module.exports = {
     getAllBooks,
     addNewBook,
@@ -103,4 +105,5 @@ module.exports = {
     updateBookByUser,
     updateCommentBook,
     updateRatingBook,
+    uploadImageBook
 }
