@@ -15,15 +15,15 @@ const addNewCart = async (req, res) => {
     const { book, user } = req.body;
     // const idExists = await cartsModel.Cart.findOne({ book: book, user: user })
     // if (!idExists) {
-        const newCart = new cartsModel.Cart({
-            user: user,
-            book: book,
-            cart: true
-        })
-        newCart.save((err, data) => {
-            if (err) return res.status(404).send(err);
-            return res.status(200).send(data);
-        });
+    const newCart = new cartsModel.Cart({
+        user: user,
+        book: book,
+        cart: true
+    })
+    newCart.save((err, data) => {
+        if (err) return res.status(404).send(err);
+        return res.status(200).send(data);
+    });
     // } else {
     //     return res.status(400).json({ error: "This Book Already Exist." });
     // }
@@ -62,15 +62,21 @@ const deleteUserCart = async (req, res) => {
 const updateBuyCart = async (req, res) => {
     const { id } = req.params;
 
-    // const findUser = cartsModel.Cart.find({ user: id }, (err, data) => {
-    //     if (err) return res.status(404).send(err);
-    //     res.status(200).send(data);
-    // });
-    const findUser = await cartsModel.Cart.updateMany({ user: id , cart: true }, { cart: false } ,(err, data) => {
+    const findUserr = await cartsModel.Cart.find({ user: id, cart: true }, (err, data) => {
         if (err) return res.status(404).send(err);
-        return res.status(200).send(data);
+        data.map((d) => {
+            booksModel.Book.findByIdAndUpdate({ _id: d.book }, { purchase: purchase++ }, { new: true, runValidators: true }, (err, data) => {
+                if (err) return res.status(404).send(err);
+                return res.status(200).send(data);
+            });
+        })
+        // res.status(200).send(data);
     });
-    
+    // const findUser = await cartsModel.Cart.updateMany({ user: id, cart: true }, { cart: false }, (err, data) => {
+    //     if (err) return res.status(404).send(err);
+    //     return res.status(200).send(data);
+    // });
+
     // cartsModel.Cart.find({ user: id }, async (err, data) => {
     //     await cartsModel.Cart.find({ cart: true },  (err, data) => {
     //         data.map( async (d) => {
