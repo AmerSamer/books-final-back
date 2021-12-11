@@ -61,13 +61,13 @@ const deleteUserCart = async (req, res) => {
 }
 const updateBuyCart = async (req, res) => {
     const { id } = req.params;
-    cartsModel.Cart.find({ user: id }, (err, data) => {
-        cartsModel.Cart.find({ cart: true }, (err, data) => {
-            data.map((d) => {
-                cartsModel.Cart.findOneAndUpdate({ _id: d._id }, { cart: false }, { new: true, runValidators: true }, (err, data) => {
-                    booksModel.Book.findById(d.book, (err, data) => {
+    cartsModel.Cart.find({ user: id }, async (err, data) => {
+        await cartsModel.Cart.find({ cart: true },  (err, data) => {
+            data.map( async (d) => {
+                await cartsModel.Cart.findOneAndUpdate({ _id: d._id }, { cart: false }, { new: true, runValidators: true }, async (err, data) => {
+                    await booksModel.Book.findById(d.book, async (err, data) => {
                         const ddd = data.purchase + 1
-                        booksModel.Book.findByIdAndUpdate({ _id: d.book }, { purchase: ddd }, { new: true, runValidators: true }, (err, data) => {
+                        await booksModel.Book.findByIdAndUpdate({ _id: d.book }, { purchase: ddd }, { new: true, runValidators: true }, (err, data) => {
                             if (err) return res.status(404).send(err);
                             return res.status(200).send(data);
                         });
