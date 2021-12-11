@@ -10,9 +10,9 @@ const getAllcartsByUser = (req, res) => {
     // const data = await cartsModel.Cart.find({user:id})
     // return res.status(200).json(data)
 }
-const addNewCart =  async (req, res) => {
+const addNewCart = async (req, res) => {
     const { book, user } = req.body;
-    const idExists = await cartsModel.Cart.findOne({book:book,user:user})
+    const idExists = await cartsModel.Cart.findOne({ book: book, user: user })
     if (!idExists) {
         const newCart = new cartsModel.Cart({
             user: user,
@@ -23,7 +23,7 @@ const addNewCart =  async (req, res) => {
             if (err) return res.status(404).send(err);
             return res.status(200).send(data);
         });
-    }else{
+    } else {
         return res.status(400).json({ error: "This Book Already Exist." });
     }
 }
@@ -59,38 +59,59 @@ const deleteUserCart = async (req, res) => {
     // });
 }
 const updateBuyCart = async (req, res) => {
-    // const { id } = req.params;
-    const data = await cartsModel.Cart.find({cart:true})
-    return res.status(200).json("data",data);
-    // console.log("data",data);
-    // data.map((d)=>{
-    //     const purchaseTemp = d.book.purchase+1
-    //     booksModel.Book.findByIdAndUpdate({ _id: d.book._id }, { purchase: purchaseTemp }, { new: true, runValidators: true }, (err, data) => {
-    //         if (err) return res.status(404).send(err);
-    //         return res.status(200).send(data);
-    //     });
-    // })
-//////////////////////////////////////////////////
-// const { id } = req.params;
-    // const { name, author, publishing, amount, language, category, desc, price } = req.body;
-    // const idExists = await booksModel.Book.findById(id);
-    // if (!idExists) {
-    //     return res.status(400).json({ error: "Book Not Valid." });
-    // }
+    const { id } = req.params;
+    // const data = await cartsModel.Cart.find({cart:true})
+    // return res.status(200).json("data",data);
 
-    // booksModel.Book.findByIdAndUpdate({ _id: id }, {
-    //     name: (name ? name : idExists.name), author: (author ? author : idExists.author), publishing: (publishing ? publishing : idExists.publishing),
-    //     amount: (amount ? amount : idExists.amount), language: (language ? language : idExists.language), category: (category ? category : idExists.category),
-    //     desc: (desc ? desc : idExists.desc), price: (price ? price : idExists.price)
-    // }, { new: true, runValidators: true }, (err, data) => {
-    //     if (err) return res.status(404).send(err);
-    //     return res.status(200).send(data);
-    // });
-//////////////////////////////////////////////////
-}
+    cartsModel.Cart.find({ user: id }, (err, data) => {
+        cartsModel.Cart.find({ cart: true }, (err, data) => {
+            if (err) return res.status(404).send(err);
+            return booksModel.Book.findByIdAndUpdate({ _id: data.book }, { purchase: 10 }, { new: true, runValidators: true }, (err, data) => {
+                if (err) return res.status(404).send(err);
+                return res.status(200).send(data);
+            });
+        });
+    });
+        // const idExists = await cartsModel.Cart.find({ user: id });
+        // if (!idExists) {
+        //     return res.status(400).json({ error: "Book Not Valid." });
+        // } else {
+        //     const cartTrue = await cartsModel.Cart.find({ cart: true });
+
+
+
+        //     cartsModel.Cart.find(id, (err, data) => {
+        //         if (err) return res.status(404).send(err);
+        //         return res.status(200).send(data);
+        //     });
+        // }
+        // console.log("data",data);
+        // data.map((d)=>{
+        //     const purchaseTemp = d.book.purchase+1
+        //     booksModel.Book.findByIdAndUpdate({ _id: d.book._id }, { purchase: purchaseTemp }, { new: true, runValidators: true }, (err, data) => {
+        //         if (err) return res.status(404).send(err);
+        //         return res.status(200).send(data);
+        //     });
+        // })
+        //////////////////////////////////////////////////
+        // const { id } = req.params;
+        // const { name, author, publishing, amount, language, category, desc, price } = req.body;
+        // const idExists = await booksModel.Book.findById(id);
+        // if (!idExists) {
+        //     return res.status(400).json({ error: "Book Not Valid." });
+        // }
+
+        // booksModel.Book.findByIdAndUpdate({ _id: id }, {
+        //     name: (name ? name : idExists.name)
+        // }, { new: true, runValidators: true }, (err, data) => {
+        //     if (err) return res.status(404).send(err);
+        //     return res.status(200).send(data);
+        // });
+        //////////////////////////////////////////////////
+    }
 module.exports = {
-    getAllcartsByUser,
-    addNewCart,
-    deleteUserCart,
-    updateBuyCart
-}
+            getAllcartsByUser,
+            addNewCart,
+            deleteUserCart,
+            updateBuyCart
+        }
