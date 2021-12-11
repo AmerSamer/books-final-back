@@ -61,27 +61,17 @@ const deleteUserCart = async (req, res) => {
 }
 const updateBuyCart = (req, res) => {
     const { id } = req.params;
-    // return res.status(200).send(id);
-
     cartsModel.Cart.find({ user: id }, (err, data) => {
         cartsModel.Cart.find({ cart: true }, (err, data) => {
-            // return res.status(200).json(data[0].book);
-            
             data.map((d) => {
-                // const ddd = d.book.purchase+1
-                // return res.status(200).json("d.book.purchase",d.book);
-                // console.log("d.book.purchase",d.book.purchase);
-                booksModel.Book.findByIdAndUpdate({ _id: d.book }, { purchase: 10 }, { new: true, runValidators: true }, (err, data) => {
-                    if (err) return res.status(404).send(err);
-                    return res.status(200).send(data);
+                booksModel.Book.find({ _id: d.book }, (err, data) => {
+                    const ddd = data.purchase + 1
+                    booksModel.Book.findByIdAndUpdate({ _id: d.book }, { purchase: ddd }, { new: true, runValidators: true }, (err, data) => {
+                        if (err) return res.status(404).send(err);
+                        return res.status(200).send(data);
+                    });
                 });
             })
-            // if (err) return res.status(404).send(err);
-            // return 
-            // booksModel.Book.findByIdAndUpdate({ _id: data.book }, { purchase: 10 }, { new: true, runValidators: true }, (err, data) => {
-            //     if (err) return res.status(404).send(err);
-            //     return res.status(200).send(data);
-            // });
         });
     });
 }
