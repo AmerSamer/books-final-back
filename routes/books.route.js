@@ -1,28 +1,28 @@
 const express = require('express');
 const booksController = require('../controllers/books.controller')
-// const booksModel = require('../models/books.model');
+const booksModel = require('../models/books.model');
 const router = express.Router();
 const multer = require('multer');
 
-// const storage = multer.diskStorage({
-//     destination: function(request, file, callback){
-//         callback(null, '../uploads/images');
-//     },
-//     filename: function(request, file, callback){
-//         callback(null, Date.now() + file.originalname);
-//     },
-// });
 const upload = multer({
-    dest:'avatars',
-    
-});
+    limits:{
+       fileSize : 1000000 // mb
+    },
+    fileFilter(req,file,cb){
+        if(!file.originalname.match(/\.(jpg|jpeg|png)$/)){
+           return cb(new Error('file must be a image'))  
+        }
+        cb(undefined , true)
+    }
+})
+
 
 router.get('/getAllBooks', (req, res) => {
     booksController.getAllBooks(req, res);
 })
-.post('/newBook', (req, res) => {
-    booksController.addNewBook(req, res);
-})
+// .post('/newBook', (req, res) => {
+//     booksController.addNewBook(req, res);
+// })
 router.get('/getAllBooksUser/:id', (req, res) => {
     booksController.getAllBooksUser(req, res);
 })
@@ -38,7 +38,19 @@ router.put('/updateCommentBook/:id', (req, res) => {
 router.put('/updateRatingBook/:id', (req, res) => {
     booksController.updateRatingBook(req, res);
 })
-router.post('/users/me/avatar', upload.single('avatar') ,(req, res) => {
-    booksController.uploadImageBook(req, res);
+
+router.post('/newBook',upload.single('img'), async(req, res)=> {
+    await booksController.addNewBook(req, res)
+ },(error,req,res,next)=>{
+    return res.status(400).send({error :error.message})
 })
+
+
+// router.post('/users/me/avatar' ,upload.single('avatar') ,async (req, res) => {
+//     req.user.avatar = req.file.buffer
+//     await req.user.save()
+//     res.send()
+// }, (error, req, res, next)=>{
+//     res.status(400).send({error: error.message})
+// })
 module.exports = router;

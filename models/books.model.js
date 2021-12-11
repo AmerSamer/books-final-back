@@ -2,9 +2,7 @@ const mongoose = require('mongoose');
 
 const booksSchema = new mongoose.Schema({
     img:{
-        type: String,
-        default: "",
-        required: false
+        type: Buffer
     },
     name: {
         type: String,
@@ -60,7 +58,7 @@ const booksSchema = new mongoose.Schema({
     ////////////////
     comments: [{
         type: String,
-        default: false,
+        default: [],
         required: false,
     }],
     //////////////

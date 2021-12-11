@@ -7,28 +7,29 @@ const getAllBooks = async (req, res) => {
     const data = await booksModel.Book.find({})
     return res.status(200).json(data)
 }
-const addNewBook = (req, res) => {
-    const { name, author, publishing, amount, language, category, desc, price, user } = req.body; ///// not finished
-    const newBook = new booksModel.Book({    
-        name: name,
-        author: author,
-        publishing: publishing,
-        amount: amount,
-        language: language,
-        category: category,
-        desc: desc,
-        price: price,
-        user: user,
-        rating: 4,
-        comments: [],
-        purchase: 0,
-        bookUploadDate: new Date()
-    })
-    newBook.save((err, data) => {
-        if (err) return res.status(404).send(err);
-        return res.status(200).send(data);
-    });
-}
+// const addNewBook = (req, res) => {
+//     const { name, author, publishing, amount, language, category, desc, price, user } = req.body; ///// not finished
+//     const newBook = new booksModel.Book({    
+//         name: name,
+//         author: author,
+//         publishing: publishing,
+//         amount: amount,
+//         language: language,
+//         category: category,
+//         desc: desc,
+//         price: price,
+//         user: user,
+//         rating: 4,
+//         comments: [],
+//         purchase: 0,
+//         bookUploadDate: new Date()
+//          img
+//     })
+//     newBook.save((err, data) => {
+//         if (err) return res.status(404).send(err);
+//         return res.status(200).send(data);
+//     });
+// }
 const getAllBooksUser = async (req, res) => {
     const { id } = req.params
     const data = await booksModel.Book.find({ user: id })
@@ -94,9 +95,20 @@ const updateRatingBook = async (req, res) => {
         return res.status(400).json({ error: "Book Not Valid." });
     }
 }
-const uploadImageBook = (req, res) => {
-     res.send()
-}
+const addNewBook = async (req, res) => {
+    console.log("req.file",req.file)
+    // console.log("req.name",req.body.name)
+    const newLink = new booksModel.Book({name: req.body.name, author: req.body.author, publishing:req.body.publishing, amount: req.body.amount, language: req.body.language, category:req.body.category, desc: req.body.desc, price: req.body.price,user: req.body.user,rating: 4,purchase: 0,bookUploadDate: new Date(), img: req.file.buffer })
+    try {
+      newLink.save((err, data) => {
+        if (err) return res.status(404).send(err)
+        return res.status(200).send(data)
+      })
+    } catch (e) {
+      res.status(503).send(e.message)
+    }
+  }
+
 module.exports = {
     getAllBooks,
     addNewBook,
@@ -105,5 +117,5 @@ module.exports = {
     updateBookByUser,
     updateCommentBook,
     updateRatingBook,
-    uploadImageBook
+    // uploadImageBook
 }
