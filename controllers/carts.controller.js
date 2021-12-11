@@ -61,7 +61,8 @@ const deleteUserCart = async (req, res) => {
 const updateBuyCart = async (req, res) => {
     // const { id } = req.params;
     const data = await cartsModel.Cart.find({cart:true})
-    console.log("data",data);
+    return res.status(200).json("data",data);
+    // console.log("data",data);
     // data.map((d)=>{
     //     const purchaseTemp = d.book.purchase+1
     //     booksModel.Book.findByIdAndUpdate({ _id: d.book._id }, { purchase: purchaseTemp }, { new: true, runValidators: true }, (err, data) => {
