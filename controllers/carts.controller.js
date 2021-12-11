@@ -62,21 +62,21 @@ const deleteUserCart = async (req, res) => {
 const updateBuyCart =  (req, res) => {
     const { id } = req.params;
 
-    cartsModel.Cart.find({ user: id, cart: true }).populate('book').exec((err, data) => {
-        if (err) return res.status(404).send(err);
-        data.map(async (d) => {
-            await booksModel.Book.findByIdAndUpdate({ _id: d.book._id }, { purchase: d.book.purchase+1 }, { new: true, runValidators: true }, (err, data) => {
-                if (err) return res.status(404).send(err);
-                return res.status(200).send(data);
-            });
-        })
-    })
+    // cartsModel.Cart.find({ user: id, cart: true }).populate('book').exec((err, data) => {
+    //     if (err) return res.status(404).send(err);
+    //     data.map(async (d) => {
+    //         await booksModel.Book.findByIdAndUpdate({ _id: d.book._id }, { purchase: d.book.purchase+1 }, { new: true, runValidators: true }, (err, data) => {
+    //             if (err) return res.status(404).send(err);
+    //             return res.status(200).send(data);
+    //         });
+    //     })
+    // })
 
    
-    // const findUser = await cartsModel.Cart.updateMany({ user: id, cart: true }, { cart: false }, (err, data) => {
-    //     if (err) return res.status(404).send(err);
-        // return res.status(200).send(data);
-    // });
+    const findUser = await cartsModel.Cart.updateMany({ user: id, cart: true }, { cart: false }, (err, data) => {
+        if (err) return res.status(404).send(err);
+        return res.status(200).send(data);
+    });
 
     // cartsModel.Cart.find({ user: id }, async (err, data) => {
     //     await cartsModel.Cart.find({ cart: true },  (err, data) => {
