@@ -59,14 +59,14 @@ const deleteUserCart = async (req, res) => {
 
     // });
 }
-const updateBuyCart = (req, res) => {
+const updateBuyCart = async (req, res) => {
     const { id } = req.params;
 
     // const findUser = cartsModel.Cart.find({ user: id }, (err, data) => {
     //     if (err) return res.status(404).send(err);
     //     res.status(200).send(data);
     // });
-    const findUser = cartsModel.Cart.find({ user: id }, (err, data) => {
+    const findUser = await cartsModel.Cart.find({ user: id }, (err, data) => {
         if (err) return res.status(404).send(err);
         return res.status(200).send(data);
     });
