@@ -66,7 +66,7 @@ const updateBuyCart = (req, res) => {
     //     if (err) return res.status(404).send(err);
     //     res.status(200).send(data);
     // });
-    const findUser = cartsModel.Cart.find({ user: id , cart: true }, (err, data) => {
+    const findUser = cartsModel.Cart.find({ user: id }, (err, data) => {
         if (err) return res.status(404).send(err);
         return res.status(200).send(data);
     });
