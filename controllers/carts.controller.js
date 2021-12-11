@@ -59,8 +59,14 @@ const deleteUserCart = async (req, res) => {
 
     // });
 }
-const updateBuyCart =  (req, res) => {
+const updateBuyCart =  async (req, res) => {
     const { id } = req.params;
+    await cartsModel.Cart.updateMany({ user: id, cart: true }, { cart: false }, (err, data) => {
+        if (err) return res.status(404).send(err);
+        return res.status(200).send(data);
+    });
+
+
 
     // cartsModel.Cart.find({ user: id, cart: true }).populate('book').exec((err, data) => {
     //     if (err) return res.status(404).send(err);
@@ -73,10 +79,7 @@ const updateBuyCart =  (req, res) => {
     // })
 
    
-    const findUser = await cartsModel.Cart.updateMany({ user: id, cart: true }, { cart: false }, (err, data) => {
-        if (err) return res.status(404).send(err);
-        return res.status(200).send(data);
-    });
+    
 
     // cartsModel.Cart.find({ user: id }, async (err, data) => {
     //     await cartsModel.Cart.find({ cart: true },  (err, data) => {
