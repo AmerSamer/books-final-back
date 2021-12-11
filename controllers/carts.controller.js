@@ -13,8 +13,8 @@ const getAllcartsByUser = (req, res) => {
 }
 const addNewCart = async (req, res) => {
     const { book, user } = req.body;
-    const idExists = await cartsModel.Cart.findOne({ book: book, user: user })
-    if (!idExists) {
+    // const idExists = await cartsModel.Cart.findOne({ book: book, user: user })
+    // if (!idExists) {
         const newCart = new cartsModel.Cart({
             user: user,
             book: book,
@@ -24,9 +24,9 @@ const addNewCart = async (req, res) => {
             if (err) return res.status(404).send(err);
             return res.status(200).send(data);
         });
-    } else {
-        return res.status(400).json({ error: "This Book Already Exist." });
-    }
+    // } else {
+    //     return res.status(400).json({ error: "This Book Already Exist." });
+    // }
 }
 const deleteUserCart = async (req, res) => {
     const { id } = req.params;
@@ -70,6 +70,7 @@ const updateBuyCart = async (req, res) => {
         if (err) return res.status(404).send(err);
         return res.status(200).send(data);
     });
+    
     // cartsModel.Cart.find({ user: id }, async (err, data) => {
     //     await cartsModel.Cart.find({ cart: true },  (err, data) => {
     //         data.map( async (d) => {
