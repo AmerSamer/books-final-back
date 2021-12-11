@@ -68,7 +68,7 @@ const updateBuyCart = (req, res) => {
             // return res.status(200).json(data);
             // if (err) return res.status(404).send(err);
             // return 
-            booksModel.Book.findByIdAndUpdate({ _id: data.book._id }, { purchase: 10 }, { new: true, runValidators: true }, (err, data) => {
+            booksModel.Book.findByIdAndUpdate({ _id: data.book }, { purchase: 10 }, { new: true, runValidators: true }, (err, data) => {
                 if (err) return res.status(404).send(err);
                 return res.status(200).send(data);
             });
