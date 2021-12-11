@@ -69,11 +69,12 @@ const updateBuyCart = (req, res) => {
             
             data.map((d) => {
                 // const ddd = d.book.purchase+1
-                console.log("d.book.purchase",d.book.purchase);
-                booksModel.Book.findByIdAndUpdate({ _id: d.book }, { purchase: 10 }, { new: true, runValidators: true }, (err, data) => {
-                    if (err) return res.status(404).send(err);
-                    return res.status(200).send(data);
-                });
+                return res.status(200).json("d.book.purchase",d.book.purchase);
+                // console.log("d.book.purchase",d.book.purchase);
+                // booksModel.Book.findByIdAndUpdate({ _id: d.book }, { purchase: 10 }, { new: true, runValidators: true }, (err, data) => {
+                //     if (err) return res.status(404).send(err);
+                //     return res.status(200).send(data);
+                // });
             })
             // if (err) return res.status(404).send(err);
             // return 
