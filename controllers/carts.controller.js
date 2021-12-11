@@ -64,6 +64,7 @@ const updateBuyCart = async (req, res) => {
     cartsModel.Cart.find({ user: id }, (err, data) => {
         cartsModel.Cart.find({ cart: true }, (err, data) => {
             data.map((d) => {
+                cartsModel.Cart.findByIdAndUpdate({_id: d._id},{cart: false}, { new: true, runValidators: true })
                 booksModel.Book.findById(d.book, (err, data) => {
                     const ddd = data.purchase + 1
                     booksModel.Book.findByIdAndUpdate({ _id: d.book }, { purchase: ddd }, { new: true, runValidators: true }, (err, data) => {
@@ -71,12 +72,6 @@ const updateBuyCart = async (req, res) => {
                         return res.status(200).send(data);
                     });
                 });
-                // const ddd = idExists.purchase + 1
-                // booksModel.Book.findByIdAndUpdate({ _id: d.book }, { purchase: ddd }, { new: true, runValidators: true }, (err, data) => {
-                //     if (err) return res.status(404).send(err);
-                //     return res.status(200).send(data);
-                // });
-
             })
         });
     });
