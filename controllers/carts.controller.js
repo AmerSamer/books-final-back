@@ -64,8 +64,8 @@ const updateBuyCart = async (req, res) => {
 
     const findUserr = await cartsModel.Cart.find({ user: id, cart: true }, (err, data) => {
         if (err) return res.status(404).send(err);
-        data.map((d) => {
-            booksModel.Book.findByIdAndUpdate({ _id: d.book }, { purchase: purchase++ }, { new: true, runValidators: true }, (err, data) => {
+        data.map(async (d) => {
+            await booksModel.Book.findByIdAndUpdate({ _id: d.book }, { purchase: purchase++ }, { new: true, runValidators: true }, (err, data) => {
                 if (err) return res.status(404).send(err);
                 return res.status(200).send(data);
             });
