@@ -59,31 +59,32 @@ const deleteUserCart = async (req, res) => {
 
     // });
 }
-const updateBuyCart = async (req, res) => {
+const updateBuyCart = (req, res) => {
     const { id } = req.params;
-    cartsModel.Cart.find({ user: id }, async (err, data) => {
-        await cartsModel.Cart.find({ cart: true },  (err, data) => {
-            data.map( async (d) => {
-                await cartsModel.Cart.findOneAndUpdate({ _id: d._id }, { cart: false }, { new: true, runValidators: true }, async (err, data) => {
-                    await booksModel.Book.findById(d.book, async (err, data) => {
-                        const ddd = data.purchase + 1
-                        await booksModel.Book.findByIdAndUpdate({ _id: d.book }, { purchase: ddd }, { new: true, runValidators: true }, (err, data) => {
-                            if (err) return res.status(404).send(err);
-                            return res.status(200).send(data);
-                        });
-                    });
-                });
 
-                // booksModel.Book.findById(d.book, (err, data) => {
-                //     const ddd = data.purchase + 1
-                //     booksModel.Book.findByIdAndUpdate({ _id: d.book }, { purchase: ddd }, { new: true, runValidators: true }, (err, data) => {
-                //         if (err) return res.status(404).send(err);
-                //         return res.status(200).send(data);
-                //     });
-                // });
-            })
-        });
+    // const findUser = cartsModel.Cart.find({ user: id }, (err, data) => {
+    //     if (err) return res.status(404).send(err);
+    //     res.status(200).send(data);
+    // });
+    const findUser = cartsModel.Cart.find({ user: id , cart: true }, (err, data) => {
+        if (err) return res.status(404).send(err);
+        return res.status(200).send(data);
     });
+    // cartsModel.Cart.find({ user: id }, async (err, data) => {
+    //     await cartsModel.Cart.find({ cart: true },  (err, data) => {
+    //         data.map( async (d) => {
+    //             await cartsModel.Cart.findOneAndUpdate({ _id: d._id }, { cart: false }, { new: true, runValidators: true }, async (err, data) => {
+    //                 await booksModel.Book.findById(d.book, async (err, data) => {
+    //                     const ddd = data.purchase + 1
+    //                     await booksModel.Book.findByIdAndUpdate({ _id: d.book }, { purchase: ddd }, { new: true, runValidators: true }, (err, data) => {
+    //                         if (err) return res.status(404).send(err);
+    //                         return res.status(200).send(data);
+    //                     });
+    //                 });
+    //             });
+    //         })
+    //     });
+    // });
 }
 module.exports = {
     getAllcartsByUser,
