@@ -60,16 +60,16 @@ const deleteUserCart = async (req, res) => {
 }
 const updateBuyCart = (req, res) => {
     const { id } = req.params;
-    return res.status(200).send(id);
-    // cartsModel.Cart.find({ user: id }, (err, data) => {
-    //     cartsModel.Cart.find({ cart: true }, (err, data) => {
-    //         if (err) return res.status(404).send(err);
-    //         return booksModel.Book.findByIdAndUpdate({ _id: data.book }, { purchase: 10 }, { new: true, runValidators: true }, (err, data) => {
-    //             if (err) return res.status(404).send(err);
-    //             return res.status(200).send(data);
-    //         });
-    //     });
-    // });
+    // return res.status(200).send(id);
+    cartsModel.Cart.find({ user: id }, (err, data) => {
+        cartsModel.Cart.find({ cart: true }, (err, data) => {
+            if (err) return res.status(404).send(err);
+            return booksModel.Book.findByIdAndUpdate({ _id: data.book }, { purchase: 10 }, { new: true, runValidators: true }, (err, data) => {
+                if (err) return res.status(404).send(err);
+                return res.status(200).send(data);
+            });
+        });
+    });
     }
 module.exports = {
             getAllcartsByUser,
