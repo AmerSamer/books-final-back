@@ -65,13 +65,13 @@ const updateBuyCart = (req, res) => {
 
     cartsModel.Cart.find({ user: id }, (err, data) => {
         cartsModel.Cart.find({ cart: true }, (err, data) => {
-            // return res.status(200).json(data);
+            return res.status(200).json(data.book);
             // if (err) return res.status(404).send(err);
             // return 
-            booksModel.Book.findByIdAndUpdate({ _id: data.book }, { purchase: 10 }, { new: true, runValidators: true }, (err, data) => {
-                if (err) return res.status(404).send(err);
-                return res.status(200).send(data);
-            });
+            // booksModel.Book.findByIdAndUpdate({ _id: data.book }, { purchase: 10 }, { new: true, runValidators: true }, (err, data) => {
+            //     if (err) return res.status(404).send(err);
+            //     return res.status(200).send(data);
+            // });
         });
     });
     }
