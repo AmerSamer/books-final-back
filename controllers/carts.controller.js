@@ -66,7 +66,7 @@ const updateBuyCart = async (req, res) => {
     //     if (err) return res.status(404).send(err);
     //     res.status(200).send(data);
     // });
-    const findUser = await cartsModel.Cart.find({ user: id }, (err, data) => {
+    const findUser = await cartsModel.Cart.find({ user: id , cart: true }, (err, data) => {
         if (err) return res.status(404).send(err);
         return res.status(200).send(data);
     });
