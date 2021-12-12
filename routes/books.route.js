@@ -20,9 +20,9 @@ const upload = multer({
 router.get('/getAllBooks', (req, res) => {
     booksController.getAllBooks(req, res);
 })
-// .post('/newBook', (req, res) => {
-//     booksController.addNewBook(req, res);
-// })
+.post('/newBook', (req, res) => {
+    booksController.addNewBook(req, res);
+})
 router.get('/getAllBooksUser/:id', (req, res) => {
     booksController.getAllBooksUser(req, res);
 })
@@ -39,18 +39,12 @@ router.put('/updateRatingBook/:id', (req, res) => {
     booksController.updateRatingBook(req, res);
 })
 
-router.post('/newBook',upload.single('img'), async(req, res)=> {
-    await booksController.addNewBook(req, res)
- },(error,req,res,next)=>{
-    return res.status(400).send({error :error.message})
-})
-
-
-// router.post('/users/me/avatar' ,upload.single('avatar') ,async (req, res) => {
-//     req.user.avatar = req.file.buffer
-//     await req.user.save()
-//     res.send()
-// }, (error, req, res, next)=>{
-//     res.status(400).send({error: error.message})
+// router.post('/newBook',upload.single('img'), async(req, res)=> {
+//     await booksController.addNewBook(req, res)
+//  },(error,req,res,next)=>{
+//     return res.status(400).send({error :error.message})
 // })
+
+
+
 module.exports = router;

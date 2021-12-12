@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const booksSchema = new mongoose.Schema({
-    img:{
-        type: Buffer
-    },
+    // img:{
+    //     type: Buffer
+    // },
     imgs:{
         type: String,
         required: false
