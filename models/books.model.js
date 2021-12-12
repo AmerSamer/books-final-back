@@ -4,6 +4,10 @@ const booksSchema = new mongoose.Schema({
     img:{
         type: Buffer
     },
+    imgs:{
+        type: String,
+        required: false
+    },
     name: {
         type: String,
         required: true

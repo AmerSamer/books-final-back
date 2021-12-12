@@ -95,7 +95,7 @@ const updateRatingBook = async (req, res) => {
         return res.status(400).json({ error: "Book Not Valid." });
     }
 }
-const addNewBook = async (req, res) => {
+const addNewBook = (req, res) => {
     console.log("req.file",req.file)
     // console.log("req.name",req.body.name)
     const newLink = new booksModel.Book({name: req.body.name, author: req.body.author, publishing:req.body.publishing, amount: req.body.amount, language: req.body.language, category:req.body.category, desc: req.body.desc, price: req.body.price,user: req.body.user,rating: 4,purchase: 0,bookUploadDate: new Date(), img: req.file.buffer })
