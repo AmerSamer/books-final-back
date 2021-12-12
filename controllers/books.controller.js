@@ -4,8 +4,16 @@ const favoritesModel = require('../models/favorites.model');
 const notificationsModel = require('../models/notifications.model');
 
 const getAllBooks = async (req, res) => {
-    const data = await booksModel.Book.find({})
-    return res.status(200).json(data)
+    const data = await booksModel.Book.find({}).populate('user').exec((err, data) => {
+        if (err) console.log(err);
+        return res.send(data)
+    })
+    // return res.status(200).json(data)
+    // const { id } = req.params
+    // cartsModel.Cart.find({ user: id }).populate('book').exec((err, data) => {
+        // if (err) console.log(err);
+        // return res.send(data)
+    // })
 }
 const addNewBook = (req, res) => {
     const { name, author, publishing, amount, language, category, desc, price, user } = req.body; ///// not finished
